@@ -15,7 +15,12 @@ services:
     image: pulse-analytics-api:latest
     volumes:
       - ./src:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/app_data
     ports:
       - "8000:8000"
     environment:
       - WATCHFILES_FORCE_POLLING=true
+      - HOST_PROJECT_PATH=${PWD}
+    depends_on:
+      - spark-job

@@ -10,6 +10,7 @@ dependencies = [
     "pyspark",
     "fastapi",
     "uvicorn[standard]",
+    "docker",
 ]
 
 # Optional dependencies: packages for DEVELOPMENT
