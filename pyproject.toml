@@ -1,0 +1,27 @@
+[project]
+name = "pulse-analytics"
+version = "0.1.0"
+description = "Data transformation and orchestration platform."
+requires-python = "==3.12"
+
+# Production dependencies: packages needed to RUN the application
+dependencies = [
+    # We will add libraries like pandas, pyspark, fastapi here in future issues
+]
+
+# Optional dependencies: packages for DEVELOPMENT
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "black",
+]
+
+# --- Tool Configurations ---
+[tool.black]
+line-length = 88
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
