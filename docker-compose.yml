@@ -1,9 +1,21 @@
 services:
-  app:
+  spark-job:
     build:
       context: .
       dockerfile: Dockerfile
-    image: pulse-analytics-app:latest
+    image: pulse-analytics-spark-job:latest
     volumes:
       - ./src:/app
       - ./data:/app_data
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: pulse-analytics-api:latest
+    volumes:
+      - ./src:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - WATCHFILES_FORCE_POLLING=true
