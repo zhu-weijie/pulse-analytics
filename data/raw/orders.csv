@@ -1,0 +1,4 @@
+order_id,customer_id,order_date,product_name,order_value
+101,cust_abc,2024-01-15,SuperWidget,150.00
+102,cust_xyz,2024-01-16,MegaWidget,200.50
+103,cust_abc,2024-01-17,SuperWidget,155.25
