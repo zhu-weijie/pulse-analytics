@@ -1,30 +1,35 @@
-import pandas as pd
-
+from pulse_analytics.spark.session import get_spark_session
 from pulse_analytics.transforms.transformations import transform_orders
 
 
 def main():
-    print("Starting the transformation process...")
-    input_filepath = "/app_data/raw/orders.csv"
+    print("Starting the Spark transformation process...")
+
+    spark = get_spark_session(app_name="PulseAnalyticsTransform")
 
     try:
-        raw_df = pd.read_csv(input_filepath)
+        input_filepath = "/app_data/raw/orders.csv"
+
+        raw_df = spark.read.csv(input_filepath, header=True, inferSchema=True)
         print(f"Successfully loaded data from {input_filepath}")
+        print("Raw data schema:")
+        raw_df.printSchema()
         print("Raw data:")
-        print(raw_df.head())
-    except FileNotFoundError:
-        print(f"Error: Could not find the file at {input_filepath}")
-        print("Please ensure the data volume is correctly mounted.")
-        return
+        raw_df.show()
 
-    transformed_df = transform_orders(raw_df)
+        transformed_df = transform_orders(raw_df)
 
-    print("\nTransformed data:")
-    print(transformed_df.head())
-    print("\nTransformed data types:")
-    print(transformed_df.info())
+        print("Transformed data schema:")
+        transformed_df.printSchema()
+        print("Transformed data:")
+        transformed_df.show()
 
-    print("\nTransformation process finished.")
+    finally:
+        print("Stopping Spark session...")
+        spark.stop()
+        print("Spark session stopped.")
+
+    print("Transformation process finished.")
 
 
 if __name__ == "__main__":
