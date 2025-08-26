@@ -21,5 +21,6 @@ services:
       - "8000:8000"
     environment:
       - WATCHFILES_FORCE_POLLING=true
+      - HOST_PROJECT_PATH=${PWD}
     depends_on:
       - spark-job
