@@ -6,23 +6,17 @@ from fastapi import HTTPException
 def run_spark_job_container() -> dict:
     try:
         client = docker.from_env()
-
-        try:
-            service_image = client.services.get("pulse-analytics-spark-job-1").attrs[
-                "Spec"
-            ]["TaskTemplate"]["ContainerSpec"]["Image"]
-        except AttributeError:
-            service_image = "pulse-analytics-spark-job:latest"
-
+        image_name = "pulse-analytics-spark-job:latest"
         network_name = "pulse-analytics_default"
 
-        print(f"Attempting to run container from image: {service_image}")
+        print(f"Attempting to run container from image: {image_name}")
 
         container = client.containers.run(
-            image=service_image,
+            image=image_name,
             detach=True,
             network=network_name,
             auto_remove=True,
+            volumes={"/app_data": {"bind": "/app_data", "mode": "ro"}},
         )
 
         print(f"Successfully started container: {container.id}")
