@@ -2,6 +2,11 @@ FROM python:3.12-slim AS base
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV JAVA_HOME /usr/lib/jvm/default-java
+
+RUN apt-get update && \
+    apt-get install -y default-jdk-headless && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
