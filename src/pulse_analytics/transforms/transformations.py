@@ -1,10 +1,15 @@
-import pandas as pd
+from pyspark.sql import DataFrame
+from pyspark.sql.functions import col, to_date
 
 
-def transform_orders(source_df: pd.DataFrame) -> pd.DataFrame:
-    transformed_df = source_df.copy()
-    transformed_df = transformed_df.rename(columns={"order_value": "revenue_usd"})
-    transformed_df["order_date"] = pd.to_datetime(transformed_df["order_date"])
+def transform_orders(source_df: DataFrame) -> DataFrame:
+    transformed_df = source_df
 
-    print("Transformation successful.")
+    transformed_df = transformed_df.withColumnRenamed("order_value", "revenue_usd")
+
+    transformed_df = transformed_df.withColumn(
+        "order_date", to_date(col("order_date"), "yyyy-MM-dd")
+    )
+
+    print("PySpark transformation successful.")
     return transformed_df
