@@ -6,3 +6,4 @@ services:
     image: pulse-analytics-app:latest
     volumes:
       - ./src:/app
+      - ./data:/app_data

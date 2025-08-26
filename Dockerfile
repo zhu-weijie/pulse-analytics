@@ -20,4 +20,4 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 
 COPY src/ .
 
-CMD ["python", "-c", "print('Setup complete. Ready for next issue.')"]
+CMD ["python", "-m", "pulse_analytics.main"]
